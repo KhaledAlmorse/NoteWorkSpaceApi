@@ -59,16 +59,6 @@ export const CreateNote = async (userId, noteData) => {
 };
 
 export const UpdateNote = async (noteId, userId, noteData) => {
-  const note = await Note.findById(noteId);
-  if (!note) throw new ApiError("Note not found.", 404);
-
-  const user = await User.findById(userId);
-  if (!user) throw new ApiError("User not found.", 404);
-
-  if (note.userId.toString() !== userId.toString()) {
-    throw new ApiError("You are not authorized to update this note.", 403);
-  }
-
   const updatedNote = await Note.findOneAndUpdate(
     { _id: noteId, userId },
     noteData,
@@ -82,16 +72,6 @@ export const UpdateNote = async (noteId, userId, noteData) => {
 };
 
 export const DeleteNote = async (noteId, userId) => {
-  const note = await Note.findById(noteId);
-  if (!note) throw new ApiError("Note not found.", 404);
-
-  const user = await User.findById(userId);
-  if (!user) throw new ApiError("User not found.", 404);
-
-  if (note.userId.toString() !== userId.toString()) {
-    throw new ApiError("You are not authorized to update this note.", 403);
-  }
-
   const deletedNote = await Note.findOneAndDelete({ _id: noteId, userId });
   if (!deletedNote) throw new ApiError("Note not found.", 404);
   return deletedNote;
