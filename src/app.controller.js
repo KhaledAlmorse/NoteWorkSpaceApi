@@ -18,9 +18,10 @@ const limiter = rateLimit({
 });
 
 const corsOptions = {
-  origin: process.env.CLIENT_URL || "*",
+  origin: ["http://localhost:5173", "https://note-work-space-app.vercel.app"],
   methods: ["GET", "POST", "PATCH", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
 };
 
 const bootstrap = async (app, express) => {
